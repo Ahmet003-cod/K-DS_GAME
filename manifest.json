@@ -1,0 +1,18 @@
+{
+  "name": "Çocuklar İçin Eğlence ve Oyun Dünyası",
+  "short_name": "Çocuk Dünyası",
+  "description": "Çocuklar için harika çizgi filmler, şarkılar ve çevrimdışı eğitici oyunlar dünyası!",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FFDEE9",
+  "theme_color": "#B5FFFC",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

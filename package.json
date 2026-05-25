@@ -1,0 +1,21 @@
+{
+  "name": "ybs-video-game-kids-web",
+  "version": "1.0.0",
+  "description": "Çocuklar için PWA tabanlı, çevrimdışı video ve oyun web uygulaması",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "pwa",
+    "kids",
+    "offline-video",
+    "canvas-games",
+    "parents-control"
+  ],
+  "author": "Antigravity AI",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0"
+  }
+}
