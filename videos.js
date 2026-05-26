@@ -237,12 +237,17 @@ async function renderVideosList(list) {
   const favs          = getFavorites();
   const downloadedIds = await getDownloadedIds();
 
+  // Çevrimdışı isek sadece indirilenleri göster
+  if (!isOnline) {
+    list = list.filter(video => video.url && downloadedIds.includes(video.url));
+  }
+
   if (!list || list.length === 0) {
     catalog.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:48px 20px;background:rgba(255,255,255,0.75);border-radius:20px;">
-        <div style="font-size:52px">🔍</div>
-        <h3 style="margin:12px 0 6px;color:var(--text-dark)">Video Bulunamadı</h3>
-        <p style="color:var(--text-light)">Ajan Çiko'ya farklı şeyler aratabilir ya da kategorileri değiştirebilirsin.</p>
+        <div style="font-size:52px">😴</div>
+        <h3 style="margin:12px 0 6px;color:var(--text-dark)">İnternet veya İndirilen Video Yok</h3>
+        <p style="color:var(--text-light)">Şu an çevrimdışısın ve bu kategoride cihaza indirilmiş video bulunmuyor.</p>
       </div>`;
     return;
   }
