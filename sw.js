@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cocuk-dunyasi-v14';
+const CACHE_NAME = 'cocuk-dunyasi-v15';
 const VIDEO_CACHE_NAME = 'cocuk-dunyasi-videos-v10';
 
 const ASSETS = [
