@@ -161,6 +161,13 @@ async function loadVideosFromServer() {
     }
 
     let shuffled = [...LOCAL_VIDEOS];
+    
+    // Filter out deleted videos
+    try {
+      const deletedList = JSON.parse(localStorage.getItem('deleted_videos') || '[]');
+      shuffled = shuffled.filter(v => !deletedList.includes(v.id));
+    } catch(e) {}
+
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -279,6 +286,12 @@ async function renderVideosList(list) {
     // Kategori rozeti
     const catTag = `<span class="video-badge" style="` + (isYT ? 'background:rgba(220,38,38,0.88)' : 'background:rgba(21,128,61,0.9)') + `">` + (video.badge || '') + `</span>`;
 
+    // Silme butonu
+    const delTag = `
+      <button onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Bu videoyu sil" style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:15;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+        🗑️
+      </button>`;
+
     // İndirme / YT simgesi
     const dlTag = isYT
       ? `<span style="position:absolute;bottom:8px;right:8px;background:rgba(220,38,38,0.88);color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:15;">▶ YT</span>`
@@ -286,6 +299,12 @@ async function renderVideosList(list) {
                  style="position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:15;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
                  ` + (isDownloaded ? '📥' : '💾') + `
          </button>`;
+
+    // Silme butonu
+    const delTag = `
+      <button onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Bu videoyu sil" style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:15;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+        🗑️
+      </button>`;
 
     // Favori butonu
     const favTag = `
@@ -298,6 +317,7 @@ async function renderVideosList(list) {
       <div class="video-thumbnail-container" style="position:relative;cursor:` + (isDisabled ? 'not-allowed' : 'pointer') + `;">
         ` + shortTag + `
         ` + catTag + `
+        ` + delTag + `
         <img class="video-thumbnail" src="` + video.thumbnail + `" alt="` + video.title + `" loading="lazy"
              onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop'">
         <div class="play-overlay" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
@@ -656,3 +676,41 @@ function showSwipeHint(text, icon) {
     hint.style.transform = 'translate(-50%, -50%) scale(0.8)';
   }, 1000);
 }
+
+// ─────────────────────────────────────────────────────────
+// VİDEO SİLME VE YENİ VİDEO GETİRME
+// ─────────────────────────────────────────────────────────
+window.deleteVideo = async function(id) {
+  let deletedList = [];
+  try { deletedList = JSON.parse(localStorage.getItem('deleted_videos') || '[]'); } catch(e){}
+  if(!deletedList.includes(id)) deletedList.push(id);
+  localStorage.setItem('deleted_videos', JSON.stringify(deletedList));
+
+  const catalog = document.getElementById('video-catalog');
+  if(catalog) {
+    catalog.innerHTML = \<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+        <div style="font-size:60px; animation: bounce 0.5s alternate infinite ease-in-out;">🔍🐶</div>
+        <h3 style="margin:16px 0 8px;color:var(--text-dark)">Ajan Çiko çalışıyor...</h3>
+        <p style="color:var(--text-light)">Silinen videonun yerine yepyeni bir video buluyorum!</p>
+      </div>\;
+  }
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  if (typeof BACKUP_VIDEOS !== 'undefined') {
+    const availableBackups = BACKUP_VIDEOS.filter(bv => !deletedList.includes(bv.id) && !VIDEO_DATABASE.find(v => v.id === bv.id));
+    if (availableBackups.length > 0) {
+      const newVideo = availableBackups[Math.floor(Math.random() * availableBackups.length)];
+      VIDEO_DATABASE.push(newVideo);
+      if(typeof LOCAL_VIDEOS !== 'undefined' && !LOCAL_VIDEOS.find(v => v.id === newVideo.id)) {
+        LOCAL_VIDEOS.push(newVideo);
+      }
+    }
+  }
+
+  VIDEO_DATABASE = VIDEO_DATABASE.filter(v => v.id !== id);
+  currentFilteredList = [...VIDEO_DATABASE];
+  
+  if (typeof playPopSound === 'function') playPopSound();
+  applyAndRender();
+};

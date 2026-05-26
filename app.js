@@ -17,8 +17,8 @@ const STATE = {
 
 document.addEventListener('DOMContentLoaded', () => {
   // PWA Cache Invalidator - forces browser to fully refresh and clear old cached assets once
-  if (localStorage.getItem('kids_app_version') !== 'v16') {
-    localStorage.setItem('kids_app_version', 'v16');
+  if (localStorage.getItem('kids_app_version') !== 'v17') {
+    localStorage.setItem('kids_app_version', 'v17');
     if ('caches' in window) {
       caches.keys().then((names) => {
         return Promise.all(names.map(name => caches.delete(name)));

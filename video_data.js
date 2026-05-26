@@ -1259,3 +1259,53 @@ const LOCAL_VIDEOS = [
     ]
   }
 ];
+const BACKUP_VIDEOS = [
+  {
+    "id": "yt-backup-1",
+    "title": "Pepee - Büyümek Ne Güzel",
+    "desc": "Pepee ile büyümek ve yeni şeyler öğrenmek çok eğlenceli!",
+    "url": null,
+    "youtubeId": "Uo5R0L4uSxw",
+    "thumbnail": "https://img.youtube.com/vi/Uo5R0L4uSxw/hqdefault.jpg",
+    "category": "cartoons",
+    "duration": "medium",
+    "badge": "🎬 Pepee",
+    "keywords": ["pepee", "büyümek", "çizgi film"]
+  },
+  {
+    "id": "yt-backup-2",
+    "title": "Niloya - Gökyüzü Çok Güzel",
+    "desc": "Niloya gökyüzündeki yıldızları ve bulutları keşfediyor.",
+    "url": null,
+    "youtubeId": "M1sE4tZ2hQw",
+    "thumbnail": "https://img.youtube.com/vi/M1sE4tZ2hQw/hqdefault.jpg",
+    "category": "cartoons",
+    "duration": "medium",
+    "badge": "🎬 Niloya",
+    "keywords": ["niloya", "gökyüzü", "çizgi film"]
+  },
+  {
+    "id": "yt-backup-3",
+    "title": "Ceviz Adam Şarkısı - Çocuk Şarkıları",
+    "desc": "Ceviz adam şip şap şop! Eğlenceli çocuk şarkısı.",
+    "url": null,
+    "youtubeId": "5j-8L4lWb1I",
+    "thumbnail": "https://img.youtube.com/vi/5j-8L4lWb1I/hqdefault.jpg",
+    "category": "songs",
+    "duration": "medium",
+    "badge": "🎵 Şarkı",
+    "keywords": ["ceviz adam", "çocuk şarkısı"]
+  },
+  {
+    "id": "yt-backup-4",
+    "title": "Kukuli - Kar Yağıyor",
+    "desc": "Kukuli ile kışın ve karın tadını çıkarın!",
+    "url": null,
+    "youtubeId": "b3r5QvT8Snc",
+    "thumbnail": "https://img.youtube.com/vi/b3r5QvT8Snc/hqdefault.jpg",
+    "category": "songs",
+    "duration": "medium",
+    "badge": "🎵 Kukuli",
+    "keywords": ["kukuli", "kar", "kış"]
+  }
+];
