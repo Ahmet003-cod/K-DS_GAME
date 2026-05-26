@@ -1,5 +1,5 @@
-const CACHE_NAME = 'cocuk-dunyasi-v17';
-const VIDEO_CACHE_NAME = 'cocuk-dunyasi-videos-v10';
+const CACHE_NAME = 'cocuk-dunyasi-v18';
+const VIDEO_CACHE_NAME = 'cocuk-dunyasi-videos-v11';
 
 const ASSETS = [
   'index.html',
