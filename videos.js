@@ -286,11 +286,6 @@ async function renderVideosList(list) {
     // Kategori rozeti
     const catTag = `<span class="video-badge" style="` + (isYT ? 'background:rgba(220,38,38,0.88)' : 'background:rgba(21,128,61,0.9)') + `">` + (video.badge || '') + `</span>`;
 
-    // Silme butonu
-    const delTag = `
-      <button onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Bu videoyu sil" style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:15;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
-        🗑️
-      </button>`;
 
     // İndirme / YT simgesi
     const dlTag = isYT
@@ -688,11 +683,11 @@ window.deleteVideo = async function(id) {
 
   const catalog = document.getElementById('video-catalog');
   if(catalog) {
-    catalog.innerHTML = \<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+    catalog.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
         <div style="font-size:60px; animation: bounce 0.5s alternate infinite ease-in-out;">🔍🐶</div>
         <h3 style="margin:16px 0 8px;color:var(--text-dark)">Ajan Çiko çalışıyor...</h3>
         <p style="color:var(--text-light)">Silinen videonun yerine yepyeni bir video buluyorum!</p>
-      </div>\;
+      </div>`;
   }
 
   await new Promise(r => setTimeout(r, 1500));
