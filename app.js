@@ -17,8 +17,8 @@ const STATE = {
 
 document.addEventListener('DOMContentLoaded', () => {
   // PWA Cache Invalidator - forces browser to fully refresh and clear old cached assets once
-  if (localStorage.getItem('kids_app_version') !== 'v14') {
-    localStorage.setItem('kids_app_version', 'v14');
+  if (localStorage.getItem('kids_app_version') !== 'v16') {
+    localStorage.setItem('kids_app_version', 'v16');
     if ('caches' in window) {
       caches.keys().then((names) => {
         return Promise.all(names.map(name => caches.delete(name)));
@@ -57,11 +57,42 @@ document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
   setupParentGate();
   setupNetworkListeners();
+  setupPWAInstallPrompt();
 
   // Initial UI Update
   updateNetworkUI(STATE.isOnline);
   updateCacheUsageStats();
 });
+
+// PWA Install Prompt
+let deferredPrompt;
+function setupPWAInstallPrompt() {
+  const installBtn = document.getElementById('btn-install-pwa');
+  if (!installBtn) return;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'flex';
+    console.log('[PWA] beforeinstallprompt event fired. Showing install button.');
+  });
+
+  installBtn.addEventListener('click', async () => {
+    installBtn.style.display = 'none';
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`[PWA] User install prompt outcome: ${outcome}`);
+      deferredPrompt = null;
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt = null;
+    console.log('[PWA] App successfully installed to home screen!');
+  });
+}
 
 // PWA Service Worker Registration
 function registerServiceWorker() {
