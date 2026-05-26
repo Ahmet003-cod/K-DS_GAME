@@ -154,7 +154,7 @@ async function loadVideosFromServer() {
       hash = Math.imul(31, hash) + todayStr.charCodeAt(i) | 0;
     }
     
-    let seed = hash;
+    let seed = Math.abs(hash) || 1;
     function random() {
       seed = (seed * 16807) % 2147483647;
       return (seed - 1) / 2147483646;

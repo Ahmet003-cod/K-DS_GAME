@@ -1258,3 +1258,49 @@ footer a {
   transform: scale(1.01);
 }
 
+
+
+/* Mobile Full Screen Games Override */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 8px;
+    border-radius: 12px;
+    margin: 0;
+    border-width: 2px;
+  }
+  main {
+    padding: 8px 4px;
+  }
+  .game-arena-header {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+  .game-arena-title {
+    font-size: 18px;
+  }
+  
+  #balloon-canvas,
+  #mole-canvas,
+  #flappy-canvas,
+  #catcher-canvas,
+  #paint-canvas {
+    width: 100% !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    height: 65vh !important;
+    border-radius: 12px !important;
+    border-width: 2px !important;
+    margin: 8px auto !important;
+  }
+  
+  /* Xylophone adjustments for mobile */
+  .xylophone-keys-container {
+    height: auto !important;
+    flex-wrap: wrap !important;
+    padding: 8px !important;
+  }
+  .xy-key {
+    min-height: 80px;
+    flex: 1 1 20%;
+  }
+}
